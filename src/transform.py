@@ -81,10 +81,19 @@ def calcula_valor_total(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
+
     df = remove_duplicates(df)
     df = define_cancelamento(df)
     df = define_ajuste_estoque(df)
     df = define_tipo_transacao(df)
     df = calcula_valor_total(df)
+    df = padroniza_tipos(df)
 
+    return df
+
+def padroniza_tipos(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df["StockCode"] = df["StockCode"].astype("string")
+    df["InvoiceNo"] = df["InvoiceNo"].astype("string")
+    df["Description"] = df["Description"].astype("string")
     return df
